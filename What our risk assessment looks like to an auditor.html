@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>What our risk assessment looks like to an auditor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  --bg: #0f1c26;
+  --panel: #14242f;
+  --field: #0e1a23;
+  --ink: #f1f4f7;
+  --muted: #9db0bf;
+  --line: #22363f;
+  --link: #8ea2ff;
+  --avatar: #8a8ff7;
+  --avatar-ink: #101a30;
+}
+:root[data-theme="light"] {
+  --bg: #f5f7fa; --panel: #ffffff; --field: #f0f3f7; --ink: #15202b; --muted: #55657a; --line: #d9e0e8; --link: #2a46c8; --avatar: #8a8ff7; --avatar-ink: #101a30;
+}
+html { scroll-padding-top: 90px; scroll-behavior: smooth; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: "Source Serif 4", Georgia, "Times New Roman", serif; font-size: 1.28rem; line-height: 1.7; }
+a { color: var(--link); }
+.ui { font-family: "Bricolage Grotesque", system-ui, -apple-system, "Segoe UI", sans-serif; }
+
+header.bar { border-bottom: 1px solid var(--line); background: var(--bg); position: sticky; top: 0; z-index: 20; }
+.bar-inner { max-width: 1180px; margin: 0 auto; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; position: relative; }
+.who { display: inline-flex; align-items: center; gap: 12px; background: var(--panel); border: 0; color: var(--ink); padding: 6px 14px 6px 6px; border-radius: 999px; cursor: pointer; font-family: "Bricolage Grotesque", system-ui, sans-serif; font-size: 1.12rem; font-weight: 700; }
+.who:focus-visible, .nav a:focus-visible, .btn:focus-visible, input:focus-visible, textarea:focus-visible { outline: 2px solid var(--link); outline-offset: 2px; }
+.avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--avatar); color: var(--avatar-ink); display: grid; place-items: center; font-size: .95rem; font-weight: 800; }
+.chev { width: 10px; height: 10px; border: solid var(--muted); border-width: 2px 2px 0 0; transform: rotate(135deg) translate(-2px, 2px); transition: transform .2s; }
+.who[aria-expanded="true"] .chev { transform: rotate(-45deg) translate(-1px, 1px); }
+.nav { display: flex; gap: 26px; font-family: "Bricolage Grotesque", system-ui, sans-serif; font-weight: 500; font-size: 1.1rem; }
+.nav a { color: var(--ink); text-decoration: none; padding: 6px 2px; }
+.nav a:hover { color: var(--link); }
+
+.panel { position: absolute; top: 66px; left: 24px; width: min(430px, calc(100vw - 32px)); max-height: calc(100vh - 100px); overflow-y: auto; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 22px 22px 24px; box-shadow: 0 20px 50px rgba(0,0,0,.45); font-family: "Bricolage Grotesque", system-ui, sans-serif; display: none; }
+.panel.open { display: block; }
+.panel h3 { margin: 0 0 16px; font-size: 1.25rem; font-weight: 700; }
+.panel dl { margin: 0 0 20px; }
+.panel dt { font-size: .95rem; color: var(--muted); margin-top: 14px; }
+.panel dd { margin: 2px 0 0; font-size: 1.15rem; font-weight: 500; }
+.panel hr { border: 0; border-top: 1px solid var(--line); margin: 0 0 20px; }
+.panel label { display: block; font-size: .95rem; color: var(--muted); margin: 14px 0 6px; }
+.panel input, .panel textarea { width: 100%; background: var(--field); border: 1px solid var(--line); border-radius: 8px; color: var(--ink); padding: 12px 14px; font: inherit; font-size: 1.05rem; }
+.panel textarea { min-height: 110px; resize: vertical; }
+.btn { margin-top: 16px; background: var(--avatar); color: var(--avatar-ink); border: 0; border-radius: 8px; padding: 11px 20px; font: inherit; font-weight: 700; font-size: 1.02rem; cursor: pointer; }
+.hint { font-size: .85rem; color: var(--muted); margin: 10px 0 0; }
+
+main { max-width: 860px; margin: 0 auto; padding: 70px 24px 90px; }
+h1 { font-family: "Bricolage Grotesque", system-ui, sans-serif; font-weight: 800; font-size: clamp(2rem, 4.6vw, 2.9rem); line-height: 1.15; letter-spacing: -0.025em; margin: 0 0 30px; }
+article h3, .sectitle { font-family: "Bricolage Grotesque", system-ui, sans-serif; font-weight: 700; font-size: clamp(1.6rem, 3.4vw, 2.1rem); line-height: 1.2; letter-spacing: -0.02em; margin: 2em 0 .6em; }
+p { margin: 0 0 1.2em; }
+ul { margin: 0 0 1.3em; padding-left: 1.3em; }
+li { margin-bottom: .5em; }
+blockquote { margin: 1.6em 0; padding-left: 20px; border-left: 3px solid var(--link); color: var(--muted); font-style: italic; }
+.refs { margin-top: 3.5em; padding-top: 1.2em; border-top: 1px solid var(--line); }
+.refs .sectitle { margin-top: .4em; }
+.refs p { padding-left: 2em; text-indent: -2em; font-size: 1.05rem; line-height: 1.65; overflow-wrap: anywhere; }
+
+@media (max-width: 640px) {
+  body { font-size: 1.12rem; }
+  .bar-inner { padding: 10px 14px; }
+  .nav { gap: 14px; font-size: 1rem; }
+  .who span.nm { display: none; }
+  .who { padding-right: 12px; }
+  .panel { left: 14px; top: 62px; }
+  main { padding: 44px 18px 70px; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .chev { transition: none; } }
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <div class="bar-inner">
+    <button class="who" id="whoBtn" aria-expanded="false" aria-controls="panel">
+      <span class="avatar" id="initials">JV</span>
+      <span class="nm" id="whoName">Jaspher Velos</span>
+      <span class="chev" aria-hidden="true"></span>
+    </button>
+    <nav class="nav" aria-label="Pages">
+      <a href="#post">Blog post</a>
+      <a href="#references">References</a>
+    </nav>
+
+    <div class="panel" id="panel" role="region" aria-label="Student details">
+      <h3>Student details</h3>
+      <dl>
+        <dt>Name</dt><dd id="dName"></dd>
+        <dt>Section</dt><dd id="dSection"></dd>
+        <dt>Subject</dt><dd id="dSubject"></dd>
+        <dt>School email</dt><dd><a id="dEmail" href="#"></a></dd>
+      </dl>
+      <hr>
+      <h3>Send me an email</h3>
+      <label for="fName">Your name</label>
+      <input id="fName" type="text" autocomplete="name">
+      <label for="fSubject">Subject</label>
+      <input id="fSubject" type="text">
+      <label for="fMsg">Message</label>
+      <textarea id="fMsg"></textarea>
+      <button class="btn" id="sendBtn" type="button">Send email</button>
+      <p class="hint">This opens your email app with the message ready to send.</p>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section id="post">
+    <h1>What our risk assessment looks like to an auditor</h1>
+    <article>
+
+    
+    
+
+    <p>When my group finished our Risk Assessment Form, I honestly thought we had done a pretty good job. We had a list of assets, a list of threats, scores for likelihood and impact, and some recommended treatments. This week's exercise asked us to open the form again and read it the way an auditor would. I did not enjoy that. Plenty of what we wrote was reasonable, but a lot less of it could actually be proven.</p>
+
+    <p>One note before I start. The organization we assessed asked us to keep things confidential, so I'm staying general here. No names, and nothing about specific weak spots.</p>
+
+    <h3 id="s1">Did they know what they owned?</h3>
+    <p>For the obvious things, yes. Everyone could tell us about the main systems, the records they depend on, and the services their clients use. The trouble was everything around those. Shared logins, a spreadsheet that had slowly turned into a database, people's own phones and laptops, outside services, even paper files in a cabinet. Nobody had listed these, and I'm not sure anyone thought of them as assets until we started asking questions.</p>
+    <p>ISO/IEC 27001 expects an organization to keep an inventory of information and the other assets connected to it, and to keep that inventory accurate (International Organization for Standardization [ISO], 2022). In our case the inventory mostly lived in people's heads. That works fine until someone is on leave, but an auditor can't sign off on "everyone just knows." They will ask to see the list, and we didn't have one to show.</p>
+
+    <h3 id="s2">The assets that mattered most</h3>
+    <p>Looking back, I'd put three groups at the top. First, the information about the people the organization serves. If it leaked or got changed, the people most hurt wouldn't be the organization, they'd be those individuals. Second, the systems that keep daily work moving, because even a short outage stops everything. Third, the financial and administrative records, since they're what show the organization is running legitimately.</p>
+    <p>NIST describes risk as a combination of how likely a threat event is and how bad the impact would be (Joint Task Force Transformation Initiative, 2012). I used to focus on likelihood because it feels more concrete. Going back through the form, I think impact deserved more weight, especially impact on other people. A leaked spreadsheet looks like a small thing on our end and can be a big deal for whoever's name is in it.</p>
+
+    <h3 id="s3">Classification and who owns what</h3>
+    <p>An auditor expects every important asset to have two things: a classification and an owner. Classification just means labelling an asset by how sensitive it is, with something simple like public, internal, confidential, and restricted. The label then decides how it gets stored, who can see it, how it's shared, and how it's thrown away (ISO, 2022). Personal information about the people the organization serves would sit near the top. Anything meant for the public sits at the bottom.</p>
+    <p>The owner is the person who is accountable for the asset. That's different from whoever maintains it day to day. This was where our form was weakest. The people who used an asset the most acted like its owner, but nobody had written that down, and some assets didn't seem to belong to anyone at all. That matters more than it sounds. Assets with no owner are the ones that don't get updated, reviewed, or watched.</p>
+
+    <h3 id="s4">What an audit would want to see</h3>
+    <p>The biggest shift for me was understanding what counts as evidence. Saying "access is restricted" is only a claim. An auditor wants the list of who has access, a record showing when it was approved, and some sign that someone checked it again later.</p>
+    <blockquote>If a control works but leaves nothing behind, an auditor can't tell it apart from a control that doesn't exist.</blockquote>
+    <p>For the assets we looked at, I think an audit would ask for things like:</p>
+    <ul>
+      <li>a current asset inventory with classifications and named owners</li>
+      <li>written policies on acceptable use, access, and handling data, plus proof that staff have read them</li>
+      <li>records of who was given access, who had it changed, and who lost it when they left</li>
+      <li>backup records, and proof that someone has actually tried restoring from them</li>
+      <li>logs or reports showing that somebody looks at security events</li>
+      <li>training records and notes on how past incidents were handled</li>
+    </ul>
+    <p>NIST's control catalog makes the same point in its own way: controls should be assessed regularly to confirm they're in place and doing what they're supposed to do (Joint Task Force, 2020).</p>
+
+    <h3 id="s5">The gaps an auditor would find</h3>
+    <p>Using that standard on our own work, I see five gaps. The asset inventory was informal and incomplete. Ownership and classification weren't recorded, so handling rules were applied unevenly. Many controls existed as habits instead of documented procedures. There was little proof of testing, so I couldn't tell you whether recovery had ever been tried or whether access was reviewed on any schedule.</p>
+    <p>The fifth one stings a bit because it's about our own form. We gave risk scores based on judgment but didn't always write down why. A reviewer reading it would have no way to follow our thinking or disagree with it.</p>
+    <p>I don't want to make the organization sound careless. It's a small group that runs on trust and good habits, which is how a lot of small organizations work. The audit view just says that habits have to be written down before they count.</p>
+
+    <h3 id="s6">How an inventory and a checklist would improve our treatments</h3>
+    <p>The treatments we recommended were sensible: tighter access control, better backups, staff awareness, and clearer procedures. Reading them again, each one would be stronger if it were tied to an inventory and a checklist.</p>
+    <p>The inventory gives each treatment something to point at. Instead of "improve backups," the organization could say which assets are covered, how often they're backed up, and who is responsible for the result. It also helps with priorities, because the most critical assets are easy to spot and can be treated first. Without it, the assets nobody remembers are the ones that get skipped.</p>
+    <p>The audit checklist gives each treatment a way to be checked. For every control it asks what the control is, who owns it, what evidence shows it works, and when it was last verified. That turns a one-off recommendation into something that repeats: put the control in place, collect the evidence, review it, fix what's weak (Joint Task Force Transformation Initiative, 2012). I think that's the part we missed the first time. We treated the recommendations as the finish line, and an auditor would see them as the starting point.</p>
+
+    <h3 id="s7">Where I ended up</h3>
+    <p>Redoing this exercise changed how I think about security work. Before, I pictured firewalls and passwords. Now I think a big part of it is accountability: knowing what you have, deciding who answers for it, and keeping proof that your protections work. If we did the assessment again, I'd begin with a full inventory, give every item an owner and a classification, and put an evidence checklist next to each treatment. It's less exciting than the technical side, but I think it's what makes the rest believable.</p>
+
+    
+    </article>
+  </section>
+  <section id="references">
+<div class="refs" id="refs">
+      <h2 class="sectitle">References</h2>
+      <p>International Organization for Standardization. (2022). <em>Information security, cybersecurity and privacy protection: Information security management systems: Requirements</em> (ISO/IEC Standard No. 27001:2022). <a href="https://www.iso.org/standard/82875.html">https://www.iso.org/standard/82875.html</a></p>
+      <p>Joint Task Force. (2020). <em>Security and privacy controls for information systems and organizations</em> (NIST Special Publication 800-53, Rev. 5). National Institute of Standards and Technology. <a href="https://doi.org/10.6028/NIST.SP.800-53r5">https://doi.org/10.6028/NIST.SP.800-53r5</a></p>
+      <p>Joint Task Force Transformation Initiative. (2012). <em>Guide for conducting risk assessments</em> (NIST Special Publication 800-30, Rev. 1). National Institute of Standards and Technology. <a href="https://doi.org/10.6028/NIST.SP.800-30r1">https://doi.org/10.6028/NIST.SP.800-30r1</a></p>
+    </div>
+
+    
+  
+  </section>
+</main>
+
+<script>
+// Edit these four lines with your own details.
+var INFO = {
+  name: "Jaspher Velos",
+  section: "IT33",
+  subject: "IT 372",
+  email: "jaspher.velos@urios.edu.ph"
+};
+
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  $('whoName').textContent = INFO.name;
+  $('dName').textContent = INFO.name;
+  $('dSection').textContent = INFO.section;
+  $('dSubject').textContent = INFO.subject;
+  $('dEmail').textContent = INFO.email;
+  $('dEmail').href = 'mailto:' + INFO.email;
+  var parts = INFO.name.trim().split(/\s+/);
+  $('initials').textContent = ((parts[0] || '')[0] || '') + ((parts.length > 1 ? parts[parts.length - 1][0] : '') || '');
+
+  var btn = $('whoBtn'), panel = $('panel');
+  function setOpen(o) { panel.classList.toggle('open', o); btn.setAttribute('aria-expanded', o ? 'true' : 'false'); }
+  btn.addEventListener('click', function (e) { e.stopPropagation(); setOpen(!panel.classList.contains('open')); });
+  panel.addEventListener('click', function (e) { e.stopPropagation(); });
+  document.addEventListener('click', function () { setOpen(false); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setOpen(false); });
+
+  $('sendBtn').addEventListener('click', function () {
+    var name = $('fName').value.trim(), subj = $('fSubject').value.trim(), msg = $('fMsg').value.trim();
+    if (!msg) { $('fMsg').focus(); return; }
+    var body = msg + (name ? '\n\n' + name : '');
+    window.location.href = 'mailto:' + INFO.email + '?subject=' + encodeURIComponent(subj || 'Message about your blog post') + '&body=' + encodeURIComponent(body);
+  });
+})();
+</script>
+</body>
+</html>
